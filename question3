@@ -1,0 +1,5 @@
+1 - Download and install PostgreSQL & PG Admin
+2 - Login to PG admin & Create Database
+3 - Connect database to Django App & run migrations
+4 - Create database test on AWS
+5 - Connect to live AWS Database s3 with PG admin & Django
