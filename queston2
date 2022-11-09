@@ -1,0 +1,54 @@
+1. Create a new folder “static” in the root of the main project.
+Same level as the “templates” directory.
+
+2. Add this code to your base template file (__base.html).
+
+{% load staticfiles %}
+
+
+3. Use this to load the files.
+
+<!-- CSS CUSTOM -->
+<link rel=”stylesheet” href=”{% static ‘css/styles.css’ %}”>
+4. Add this to your settings.py file.
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+if use webpack------
+npm install --save-dev webpack-bundle-tracker
+
+pip install django-webpack-loader
+
+In webpack.config.js
+const path = require('path');
+const webpack = require('webpack');
+const BundleTracker = require('webpack-bundle-tracker');
+
+module.exports = {
+  context: __dirname,
+  entry: './assets/js/index',
+  output: {
+    path: path.resolve('./assets/webpack_bundles/'),
+    filename: "[name]-[hash].js"
+  },
+  plugins: [
+    new BundleTracker({filename: './webpack-stats.json'})
+  ],
+}
+
+In setting.py----
+INSTALLED_APPS = (
+  ...
+  'webpack_loader',
+  ...
+)
+WEBPACK_LOADER = {
+  'DEFAULT': {
+    'CACHE': not DEBUG,
+    'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    'POLL_INTERVAL': 0.1,
+    'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
+  }
+}
